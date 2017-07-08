@@ -106,8 +106,15 @@ namespace Hangfire.Firebird
                     String.Join(", ", queues)));
             }
 
-            var persistentQueue = providers[0].GetJobQueue(_connection);
-            return persistentQueue.Dequeue(queues, cancellationToken);
+            //var persistentQueue = providers[0].GetJobQueue(_connection);
+            //return persistentQueue.Dequeue(queues, cancellationToken);
+            IFetchedJob result;
+            using (this.AcquireDistributedLock("jobqueue:dequeue.lock", TimeSpan.FromMinutes(1)))
+            {
+                var persistentQueue = providers[0].GetJobQueue(this._connection);
+                result = persistentQueue.Dequeue(queues, cancellationToken);
+            }
+            return result;
         }
 
         public string CreateExpiredJob(
@@ -318,7 +325,7 @@ namespace Hangfire.Firebird
 
             _connection.Execute(string.Format(@"
                 MERGE INTO ""{0}.SERVER"" target
-                USING (SELECT CAST(@id AS VARCHAR(50) CHARACTER SET UNICODE_FSS), CAST(@data AS BLOB SUB_TYPE 1 SEGMENT SIZE 80 CHARACTER SET UNICODE_FSS), CAST(@heartbeat AS TIMESTAMP) FROM rdb$database) source (id, data, heartbeat)
+                USING (SELECT CAST(@id AS VARCHAR(100) CHARACTER SET UNICODE_FSS), CAST(@data AS BLOB SUB_TYPE 1 SEGMENT SIZE 80 CHARACTER SET UNICODE_FSS), CAST(@heartbeat AS TIMESTAMP) FROM rdb$database) source (id, data, heartbeat)
                 ON target.id = source.id
                 WHEN MATCHED THEN UPDATE SET target.data = source.data, target.lastheartbeat = source.heartbeat
                 WHEN NOT MATCHED THEN INSERT (id, data, lastheartbeat) VALUES (source.id, source.data, source.heartbeat);", _options.Prefix),

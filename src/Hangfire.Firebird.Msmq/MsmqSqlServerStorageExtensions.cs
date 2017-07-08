@@ -27,11 +27,13 @@ namespace Hangfire.Firebird.Msmq
 {
     public static class MsmqSqlServerStorageExtensions
     {
+        [Obsolete("Please use `GlobalConfiguration.UseFirebirdStorage.UseMsmqQueues` instead. Will be removed in version 2.0.0.")]
         public static FirebirdStorage UseMsmqQueues(this FirebirdStorage storage, string pathPattern)
         {
             return UseMsmqQueues(storage, pathPattern, new []{ EnqueuedState.DefaultQueue });
         }
 
+        [Obsolete("Please use `GlobalConfiguration.UseFirebirdStorage.UseMsmqQueues` instead. Will be removed in version 2.0.0.")]
         public static FirebirdStorage UseMsmqQueues(this FirebirdStorage storage, string pathPattern, params string[] queues)
         {
             if (storage == null) throw new ArgumentNullException("storage");

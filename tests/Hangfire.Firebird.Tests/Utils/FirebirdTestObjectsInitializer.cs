@@ -44,7 +44,8 @@ namespace Hangfire.Firebird.Tests
             FbScript fbScript = new FbScript(script);
             fbScript.Parse();
 
-            FbBatchExecution fbBatch = new FbBatchExecution(connection, fbScript);
+            FbBatchExecution fbBatch = new FbBatchExecution(connection);
+            fbBatch.AppendSqlStatements(fbScript);
             fbBatch.Execute(true);
         }
 

@@ -62,8 +62,8 @@ namespace Hangfire.Firebird
                 BEGIN
                     UPDATE """ + _options.Prefix + @".JOBQUEUE"" 
                     SET fetchedat = " + string.Format(CultureInfo.InvariantCulture, @"DATEADD(minute, -{0:N5}*60, current_timestamp)", _options.UtcOffset) + @"
-                    WHERE id IN (
-                        SELECT id 
+                    WHERE id = (
+                        SELECT DISTINCT id 
                         FROM """ + _options.Prefix + @".JOBQUEUE""  
                         WHERE queue IN ('" + string.Join("','", queues) + @"') 
                         AND fetchedat {0} 

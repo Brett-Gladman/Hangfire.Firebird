@@ -45,7 +45,7 @@ namespace Hangfire.Firebird
         public IEnumerable<string> GetQueues()
         {
             string sqlQuery = string.Format(@"
-                SELECT DISTINCT QUEUE 
+                SELECT DISTINCT queue 
                 FROM ""{0}.JOBQUEUE"";", _options.Prefix); 
 
             return _connection.Query(sqlQuery).Select(x => (string)x.queue).ToList();

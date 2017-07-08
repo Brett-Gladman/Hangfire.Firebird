@@ -4,6 +4,7 @@ using System.Messaging;
 using System.Reflection;
 using System.Threading;
 using Xunit;
+using Xunit.Sdk;
 
 namespace Hangfire.Msmq.Tests
 {

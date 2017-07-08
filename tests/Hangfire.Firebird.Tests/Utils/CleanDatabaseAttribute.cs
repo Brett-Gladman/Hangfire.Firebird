@@ -19,7 +19,7 @@
 // Hangfire. <http://hangfire.io/>
 //   
 //    Special thanks goes to him.
-﻿
+
 using System;
 using System.Data;
 using System.Linq;
@@ -29,6 +29,7 @@ using System.IO;
 using Dapper;
 using FirebirdSql.Data.FirebirdClient;
 using Xunit;
+using Xunit.Sdk;
 
 namespace Hangfire.Firebird.Tests
 {

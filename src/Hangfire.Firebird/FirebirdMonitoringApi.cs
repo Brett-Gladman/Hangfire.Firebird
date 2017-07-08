@@ -598,7 +598,7 @@ namespace Hangfire.Firebird
                 FROM ""{0}.JOB"" j
                 LEFT JOIN ""{0}.STATE"" s ON j.stateid = s.id
                 LEFT JOIN ""{0}.JOBQUEUE"" jq ON jq.jobid = j.id
-                WHERE j.id = IN ({1}) 
+                WHERE j.id IN ({1}) 
                 AND jq.fetchedat IS NOT NULL;", _options.Prefix, string.Join(",", jobIds));
            
             var jobs = connection.Query<SqlJob>(

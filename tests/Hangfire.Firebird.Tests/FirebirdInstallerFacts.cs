@@ -38,7 +38,7 @@ namespace Hangfire.Firebird.Tests
         [Fact]
         public void InstallingSchemaShouldNotThrowAnException()
         {
-            Assert.DoesNotThrow(() =>
+            var ex = Record.Exception(() =>
             {
                 DropDatabase();
 
@@ -53,6 +53,7 @@ namespace Hangfire.Firebird.Tests
 
                 //DropDatabase();
             });
+            Assert.Null(ex);
         }
 
         private static void CreateDatabase()

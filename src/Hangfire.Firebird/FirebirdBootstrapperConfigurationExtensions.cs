@@ -20,6 +20,8 @@
 //   
 //    Special thanks goes to him.
 
+using System;
+
 namespace Hangfire.Firebird
 {
     public static class FirebirdBootstrapperConfigurationExtensions
@@ -31,6 +33,7 @@ namespace Hangfire.Firebird
         /// </summary>
         /// <param name="configuration">Configuration</param>
         /// <param name="nameOrConnectionString">Connection string or its name</param>
+        [Obsolete("Please use `GlobalConfiguration.UseSqlServerStorage` instead. Will be removed in version 2.0.0.")]
         public static FirebirdStorage UseFirebirdStorage(
             this IBootstrapperConfiguration configuration,
             string nameOrConnectionString)
@@ -49,6 +52,7 @@ namespace Hangfire.Firebird
         /// <param name="configuration">Configuration</param>
         /// <param name="nameOrConnectionString">Connection string or its name</param>
         /// <param name="options">Advanced options</param>
+        [Obsolete("Please use `GlobalConfiguration.UseSqlServerStorage` instead. Will be removed in version 2.0.0.")] 
         public static FirebirdStorage UseFirebirdStorage(
             this IBootstrapperConfiguration configuration,
             string nameOrConnectionString,
